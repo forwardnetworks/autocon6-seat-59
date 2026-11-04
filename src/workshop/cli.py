@@ -245,7 +245,7 @@ def _predict(settings: config.Settings, args) -> int:
     git = {k: v for k, v in {"pr": args.pr, "head_sha": args.head_sha, "base_sha": args.base_sha,
                              "repo": os.environ.get("GITHUB_REPOSITORY"), "run_id": os.environ.get("GITHUB_RUN_ID"),
                              "actor": os.environ.get("GITHUB_ACTOR")}.items() if v}
-    m = predict.run(settings, predict.Inputs(root / args.candidate, root / args.requirements, root / args.baseline_requirements, git))
+    m = predict.run(settings, predict.Inputs(root / args.candidate, root / args.requirements, root / args.baseline_requirements, git), log=log)
     out = Path(args.out)
     m.write(out / "evidence.json")
     routing = None
