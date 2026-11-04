@@ -252,6 +252,10 @@ def _predict(settings: config.Settings, args) -> int:
     if m.predicted_snapshot_id:
         with contextlib.suppress(Exception), Forward(settings, quick=True) as fwd:  # display only: short timeout, no retries
             routing = report_.routing_table(fwd.c, str(m.baseline_snapshot_id), str(m.predicted_snapshot_id))
+    for snap in {str(m.baseline_snapshot_id), str(m.predicted_snapshot_id)} - {"", "None"}:  # Forward's raw answers travel with the evidence
+        raw = settings.state_dir / f"forward-{snap}.json"
+        if raw.is_file():
+            shutil.copy(raw, out / raw.name)
     summary = evidence.markdown(m, routing)
     (out / "summary.md").write_text(summary)
     _append_summary(summary)

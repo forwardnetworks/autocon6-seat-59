@@ -157,6 +157,7 @@ details#chal-stretch { margin-top:8px; border-top:1px solid var(--divider); padd
 
 /* Guided step */
 .stage { cursor: pointer; } .stage.sel { outline: 2px solid var(--accent); outline-offset: -2px; }
+.why-it-matters { margin:8px 0 0; padding:8px 10px; border-left:3px solid var(--accent); background:var(--group); border-radius:0 var(--radius) var(--radius) 0; font-size:13px; }
 .nafrow { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:2px 0 8px; font-size:12px; color:var(--txt-2); }
 .naf { background:var(--accent-bg); color:var(--accent); border-radius:12px; padding:2px 10px; font-weight:600; cursor:help; }
 .gsec { border-top:1px solid var(--divider); margin-top:14px; padding-top:12px; }
@@ -526,6 +527,7 @@ function renderGuide(s, key) {
     <div class="nafrow">Framework block: ${naf}</div>
     ${failed ? `<div class="banner bad">${esc(stage.detail)}</div>` : ""}
     <div>${esc(g.what)}</div>
+    ${g.why ? `<div class="why-it-matters"><b>Why this matters.</b> ${esc(g.why)}</div>` : ""}
     <div class="gsec" id="arts"><h3>What you're working with</h3><div class="muted">loading…</div></div>
     ${(g.data || []).length ? `<div class="gsec" id="fdata"><h3>What Forward says</h3><div class="muted">asking Forward…</div></div>` : ""}
     ${(g.before || []).length ? `<div class="gsec"><h3>Before you run it: what do you expect?</h3>${quiz(g.before, "b")}</div>` : ""}

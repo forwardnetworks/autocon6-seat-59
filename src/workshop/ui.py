@@ -413,9 +413,13 @@ class Board:
                 path = self.shown_evidence()
             elif ref.startswith("forward:"):
                 try:
-                    path = self.settings.state(f"forward-{self.snapshot_for(ref[8:])}.json")
+                    name = f"forward-{self.snapshot_for(ref[8:])}.json"
                 except LookupError:
                     path = None
+                else:
+                    path = self.settings.state(name)
+                    if not path.is_file() and (self.shown_evidence().parent / name).is_file():
+                        path = self.shown_evidence().parent / name  # a pull request's prediction ran in CI: its raw answers came with the evidence
             else:
                 path = self.settings.repo_root / ref
             text = ""
